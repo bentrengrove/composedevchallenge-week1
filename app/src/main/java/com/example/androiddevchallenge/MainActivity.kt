@@ -21,22 +21,29 @@ import androidx.activity.OnBackPressedCallback
 import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.*
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.GridCells
-import androidx.compose.foundation.lazy.LazyVerticalGrid
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-
 import com.example.androiddevchallenge.ui.theme.MyTheme
 
 class MainActivity : AppCompatActivity() {
@@ -81,7 +88,7 @@ fun MyApp() {
         selectedPuppy?.let { puppy ->
             PuppyDetails(puppy = puppy)
         } ?: run {
-            PuppyGrid() {
+            PuppyGrid {
                 selectedPuppy = it
             }
         }
@@ -90,7 +97,7 @@ fun MyApp() {
 
 @ExperimentalFoundationApi
 @Composable
-fun PuppyGrid(onPuppyClick: (Puppy)->Unit) {
+fun PuppyGrid(onPuppyClick: (Puppy) -> Unit) {
     Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
         Column(Modifier.padding(16.dp)) {
             Text(text = "PUPPY FINDER", style = MaterialTheme.typography.overline)
@@ -100,9 +107,12 @@ fun PuppyGrid(onPuppyClick: (Puppy)->Unit) {
         StaggeredVerticalGrid(maxColumnWidth = 300.dp) {
             PuppyRepo.puppies.forEach {
                 Box(Modifier.padding(8.dp)) {
-                    PuppyView(puppy = it, modifier = Modifier
-                        .fillMaxWidth()
-                        .clickable { onPuppyClick(it) })
+                    PuppyView(
+                        puppy = it,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .clickable { onPuppyClick(it) }
+                    )
                 }
             }
         }
