@@ -21,6 +21,8 @@ import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.unit.Dp
 import kotlin.math.ceil
 
+// Taken from Compose sample Owl
+// https://github.com/android/compose-samples/blob/main/Owl/app/src/main/java/com/example/owl/ui/courses/FeaturedCourses.kt#L161
 @Composable
 fun StaggeredVerticalGrid(
     modifier: Modifier = Modifier,

@@ -55,7 +55,10 @@ fun PuppyDetails(puppy: Puppy, modifier: Modifier = Modifier) {
     val context = LocalContext.current as? Activity
     val scrollState = rememberScrollState()
 
-    val imagePadding = (-scrollState.value * 0.2f).dp
+    // Calculate the offset of the background image to make it scroll with a parallax effect
+    val imageOffset = (-scrollState.value * 0.2f).dp
+
+    // Calculate the alpha used in the background of the back arrow
     val iconBackgroundAlpha = ((scrollState.value / START_TOP_PADDING.toFloat()) * 0.2f).coerceAtMost(0.2f)
 
     Box {
@@ -64,7 +67,7 @@ fun PuppyDetails(puppy: Puppy, modifier: Modifier = Modifier) {
             contentDescription = null,
             contentScale = ContentScale.FillWidth,
             modifier = Modifier
-                .offset(y = imagePadding)
+                .offset(y = imageOffset)
                 .height(200.dp)
                 .fillMaxWidth()
         )

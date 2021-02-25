@@ -63,6 +63,7 @@ class MainActivity : AppCompatActivity() {
 fun MyApp() {
     var selectedPuppy by remember { mutableStateOf<Puppy?>(null) }
 
+    // HACK: Quick hacked together back catcher to navigate back from the puppy screen
     val context = LocalContext.current
     val backDispatcher = LocalOnBackPressedDispatcherOwner.current
     val backCallback = remember {
